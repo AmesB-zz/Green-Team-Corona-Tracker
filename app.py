@@ -1,9 +1,15 @@
+from flask import (
+    Flask, render_template, redirect, url_for, request
+)
 
-from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
+def home():
+    return render_template('login.html')
+
+'''
+@app.route('/')
 def hello_world():
-    return 'Eastern Oregon University Coronavirus Tracker'
-
-
+    return 'Hello, World!'
+'''
