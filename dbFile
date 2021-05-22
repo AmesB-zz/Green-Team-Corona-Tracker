@@ -1,0 +1,98 @@
+
+ DROP TABLE IF EXISTS Users;
+
+ DROP TABLE IF EXISTS Location;
+
+ DROP  TABLE IF EXISTS UserLocation;
+
+ CREATE TABLE IF NOT EXISTS Users (
+        username varchar [PRIMARY KEY, NOT NULL],
+        PasswordHash binary [NOT NULL],
+        firstName varchar,
+        lastName varchar,
+        isInfected boolean,
+        isAdmin boolean
+      );
+
+ CREATE TABLE IF NOT EXISTS Location (
+        location_id int [NOT NULL, PRIMARY KEY],
+        name varchar [NOT NULL],
+        rate float [NOT NULL]
+      );
+
+ CREATE TABLE IF NOT EXISTS UserLocation (
+        location_id int,
+        entryTime datetime,
+        rate float,
+        username varchar,
+          foreign key(location_id)
+              references Location(location_id),
+          foreign key(username)
+              references Users(username)
+       );
+
+ insert into Location (location_id, name, rate)  values (1,'Safeway',.06);
+
+ insert into Location (location_id, name, rate)  values (2,'DB Supply',.03);
+
+ insert into Location (location_id, name, rate)  values (3,'Library',.25);
+
+ insert into Location (location_id, name, rate)  values (4,'Bobs Bar',.5);
+
+ insert into Users (username, PasswordHash, firstName, isInfected, isAdmin)
+        values ('user1','password','Person A',false ,false );
+
+ insert into Users (username, PasswordHash, firstName, isInfected, isAdmin)
+        values ('user2','password','Person X',true ,false );
+
+ insert into Users (username, PasswordHash, firstName, isInfected, isAdmin)
+        values ('user3','password','Person B',false ,false );
+
+ insert into Users (username, PasswordHash, firstName, isInfected, isAdmin)
+        values ('user4','password','Person C',false ,false );
+
+ insert into Users (username, PasswordHash, firstName, isInfected, isAdmin)
+        values ('user5','password','Person D',false ,false);
+
+ insert into Users (username, PasswordHash, firstName, isInfected, isAdmin)
+        values ('user6','password','Person E',false ,false);
+
+ insert into Users (username, PasswordHash, firstName, isInfected, isAdmin)
+        values ('user7','password','Sheehy',false ,false );
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (1, 'user1', '08:00', .06);
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (1, 'user2', '09:00', .06);
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (1, 'user3', '10:00', .06);
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (1, 'user7', '14:00', .06);
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (2, 'user7', '15:00', .03);
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (2, 'user4', '15:05', .03);
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (3, 'user4', '15:30', .25);
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (3, 'user5', '16:00', .25);
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (3, 'user3', '16:05', .25);
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (4, 'user5', '18:00', .50);
+
+ insert into UserLocation (location_id, username, entryTime, rate)
+        values (4, 'user6', '18:05', .50);
+
+
+ select firstName, name, entryTime from Location l join UserLocation ul on l.location_id = ul.location_id
+      join Users u on ul.username = u.username
