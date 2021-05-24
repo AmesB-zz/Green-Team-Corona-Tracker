@@ -6,7 +6,7 @@ https://flask.palletsprojects.com/en/2.0.x/tutorial/factory/
 
 import os
 
-from flask import Flask
+from flask import Flask, render_template
 
 def create_app(test_config=None):
     # create and configure the app
@@ -30,9 +30,13 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
+
     @app.route('/')
     def hello():
+        '''
         return 'Hello, World!'
+        '''
+        return render_template('auth/login.html')
 
     from . import db
     db.init_app(app)
