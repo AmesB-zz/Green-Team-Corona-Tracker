@@ -44,4 +44,9 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
+    '''adding test index'''
+    from . import test_user_index
+    app.register_blueprint(test_user_index.bp)
+    app.add_url_rule('/', endpoint='index')
+
     return app
