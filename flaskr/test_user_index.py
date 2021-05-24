@@ -9,7 +9,8 @@ from flaskr.db import get_db
 
 bp = Blueprint('test_user_index', __name__)
 
-@bp.route('/', methods=('GET', 'POST'))
+@bp.route('/', methods=('GET','POST'))
+#@login_required
 def test_user_index():
 
 
