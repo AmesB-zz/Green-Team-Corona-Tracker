@@ -15,7 +15,7 @@ from flaskr.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-''' Register new Account'''
+# Register new Account
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
@@ -46,7 +46,7 @@ def register():
 
     return render_template('auth/register.html')
 
-''' Login'''
+# Login
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
@@ -77,7 +77,7 @@ def login():
 
 @bp.before_app_request
 def load_logged_in_user():
-    ''' changed from tutorial, was originally userid instead of username'''
+    # changed from tutorial, was originally userid instead of username
     userName = session.get('userName')
 
     if userName is None:
@@ -87,7 +87,7 @@ def load_logged_in_user():
             'SELECT * FROM user WHERE username = ?', (userName,)
         ).fetchone()
 
-'''logout'''
+# logout
 
 @bp.route('/logout')
 def logout():

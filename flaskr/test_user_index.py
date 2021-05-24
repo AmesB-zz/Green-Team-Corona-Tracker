@@ -9,9 +9,9 @@ from flaskr.db import get_db
 
 bp = Blueprint('test_user_index', __name__)
 
-@bp.route('/')
+@bp.route('/', methods=('GET', 'POST'))
 def test_user_index():
 
 
 
-    return render_template('blog/index.html')
+    return render_template('test_user_index/index.html')
