@@ -11,7 +11,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from flaskr.db import get_db
+from .db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -70,8 +70,9 @@ def login():
         if error is None:
             session.clear()
             session['user'] = user['username']
-            return render_template('test_user_index/index.html')
-            #return redirect(url_for('index'))
+            # send to test user index
+            return redirect(url_for("test_user_index.tux"))
+
 
         flash(error)
 
@@ -82,7 +83,7 @@ def login():
 @bp.before_app_request
 def load_logged_in_user():
     # changed from tutorial, was originally userid instead of username
-    userName = session.get('userName')
+    userName = session.get('user')
 
     if userName is None:
         g.user = None

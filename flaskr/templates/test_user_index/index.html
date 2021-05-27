@@ -7,10 +7,9 @@
 
 {% block content %}
 
-<h1>login success</h1>
 
 {% if g.user %}
-    <h2>HELLO</h2>
+    <h2>HELLO {{ g.user['userName'] }}</h2>
   {% endif %}
 
 {% endblock %}
