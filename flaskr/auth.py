@@ -32,7 +32,8 @@ def register():
         elif db.execute(
             'SELECT username FROM user WHERE username = ?', (username,)
         ).fetchone() is not None:
-            error = f"User {username} is already registered."
+            error = f"{username} is already registered. Please choose " \
+                    f"another username"
 
         if error is None:
             db.execute(
@@ -50,6 +51,8 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
+
+
     if request.method == 'POST':
         username = request.form['username']
         passwordHash = request.form['password']
@@ -67,7 +70,8 @@ def login():
         if error is None:
             session.clear()
             session['user'] = user['username']
-            return redirect(url_for('index'))
+            return render_template('test_user_index/index.html')
+            #return redirect(url_for('index'))
 
         flash(error)
 

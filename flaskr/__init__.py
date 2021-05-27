@@ -36,7 +36,7 @@ def create_app(test_config=None):
         '''
         return 'Hello, World!'
         '''
-        return render_template('auth/login.html')
+        return render_template('auth/home.html')
 
     from . import db
     db.init_app(app)
