@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="c7e7dbcb-bff2-4002-8724-d7894db6fa5e" />
+          <option name="name" value="schema" />
+          <option name="urls">
+            <array>
+              <option value="file://$PROJECT_DIR$/flaskr/schema.sql" />
+            </array>
+          </option>
+        </State>
+      </list>
+    </option>
+  </component>
+</project>
