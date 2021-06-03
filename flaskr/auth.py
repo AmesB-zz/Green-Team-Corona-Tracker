@@ -2,6 +2,7 @@
 authorizatin code from flask tutorial
 https://flask.palletsprojects.com/en/2.0.x/tutorial/views/
 © Copyright 2010 Pallets
+Modified for EOU CS362 Corona Virus project
 '''
 
 import functools

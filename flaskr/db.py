@@ -2,7 +2,8 @@
 '''
 database config file from flask tutorial
 https://flask.palletsprojects.com/en/2.0.x/tutorial/database/
-© Copyright 2010 Pallets
+© Copyright 2010 Pallets\
+Modified for EOU CS362 Corona Virus project
 '''
 
 
@@ -11,6 +12,7 @@ import sqlite3
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 def get_db():
@@ -35,6 +37,15 @@ def init_db():
 
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
+
+
+        #testing how to initialize
+
+        db.execute(
+            'INSERT INTO Users (username, passwordHash,firstName, lastName, isInfected, isAdmin) VALUES (?, ?, ?, ?, ?, ?)',
+            ('Dan', generate_password_hash('test'), 'Dan', 'Lea', False, False)
+        )
+        db.commit()
 
 @click.command('init-db')
 @with_appcontext
