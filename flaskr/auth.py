@@ -30,14 +30,14 @@ def register():
         elif not passwordHash:
             error = 'Password is required.'
         elif db.execute(
-            'SELECT username FROM user WHERE username = ?', (username,)
+            'SELECT username FROM Users WHERE username = ?', (username,)
         ).fetchone() is not None:
             error = f"{username} is already registered. Please choose " \
                     f"another username"
 
         if error is None:
             db.execute(
-                'INSERT INTO user (username, passwordHash) VALUES (?, ?)',
+                'INSERT INTO Users (username, passwordHash) VALUES (?, ?)',
                 (username, generate_password_hash(passwordHash))
             )
             db.commit()
@@ -59,7 +59,7 @@ def login():
         db = get_db()
         error = None
         user = db.execute(
-            'SELECT * FROM user WHERE username = ?', (username,)
+            'SELECT * FROM Users WHERE username = ?', (username,)
         ).fetchone()
 
         if user is None:
@@ -89,7 +89,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_db().execute(
-            'SELECT * FROM user WHERE username = ?', (userName,)
+            'SELECT * FROM Users WHERE username = ?', (userName,)
         ).fetchone()
 
 # logout
