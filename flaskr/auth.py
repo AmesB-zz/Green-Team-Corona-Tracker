@@ -22,6 +22,8 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         passwordHash = request.form['password']
+        firstName = request.form['firstName']
+        lastName = request.form['lastName']
         db = get_db()
         error = None
 
@@ -37,8 +39,8 @@ def register():
 
         if error is None:
             db.execute(
-                'INSERT INTO Users (username, passwordHash) VALUES (?, ?)',
-                (username, generate_password_hash(passwordHash))
+                'INSERT INTO Users (username, passwordHash,firstName, lastName, isInfected, isAdmin) VALUES (?, ?, ?, ?, ?, ?)',
+                (username, generate_password_hash(passwordHash), firstName, lastName, False, False)
             )
             db.commit()
             return redirect(url_for('auth.login'))
