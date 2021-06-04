@@ -1,3 +1,9 @@
+'''
+conftest framework modified from flask tutorial
+https://flask.palletsprojects.com/en/2.0.x/tutorial/tests/
+© Copyright 2010 Pallets
+'''
+
 import os
 import tempfile
 
