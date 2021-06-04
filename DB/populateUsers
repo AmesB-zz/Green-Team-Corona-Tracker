@@ -1,0 +1,10 @@
+insert into Users (username, passwordHash, firstName, lastName) values ('eringwood0', '1c67b70543e45883e1e73484c1e4fdff83cd7bb251b25435aef6c25fb76004bc', 'Erin', 'Ringwood');
+insert into Users (username, passwordHash, firstName, lastName) values ('cjanout1', '605d0f9eadc32746df2f04d3dff156f3a7511a5835f21c8a8c62aafd08c95986', 'Cheslie', 'Janout');
+insert into Users (username, passwordHash, firstName, lastName) values ('kstealfox2', '687319b342074d1abf82e3b5e3e1d8efb55a799e25545ef6b16bb4b3bd0447b0', 'Korry', 'Stealfox');
+insert into Users (username, passwordHash, firstName, lastName) values ('llegion3', 'cce9f6408719ccb4f4de4a2173622f602afe3bbff7be5d543136735a0bdbb8aa', 'Lilas', 'Legion');
+insert into Users (username, passwordHash, firstName, lastName) values ('blabitt4', '35f0290dd0ed1c403f3ae44133b6e1c0dbed59d46811bc80e6a30b99581e1fec', 'Benedikta', 'Labitt');
+insert into Users (username, passwordHash, firstName, lastName) values ('hrilton5', '2f6ca3c36530fea447711d546a80af043a629eb42a4dc78cf12967b41c752c25', 'Hamilton', 'Rilton');
+insert into Users (username, passwordHash, firstName, lastName) values ('dtweed6', '79fce24ac502518f79149be84f924bf4ed05117fe6869760a9452e0cd8ed6f25', 'Devonna', 'Tweed');
+insert into Users (username, passwordHash, firstName, lastName) values ('bgifkins7', '4f73ab88406032c87c4a8c1f1c876eafc536850acaaa746d59130728694df884', 'Becky', 'Gifkins');
+insert into Users (username, passwordHash, firstName, lastName) values ('mnolda8', '1dd12f09fc2df5409ce1220b6bb670fd86e9895e599b13931f18cccf98c109b4', 'Martyn', 'Nolda');
+insert into Users (username, passwordHash, firstName, lastName) values ('wabdie9', '02542912bfc58fc9a99cc781070b4ac7a1f643e6857a03c1e72ca8aa8f5bce7b', 'Willabella', 'Abdie');

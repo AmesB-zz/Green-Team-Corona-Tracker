@@ -61,7 +61,3 @@
 
  insert into UserLocation (location_id, username, entryTime, rate)
         values (4, 'user6', '18:05', .50);
-
-
- select firstName, name, entryTime from Location l join UserLocation ul on l.location_id = ul.location_id
-      join Users u on ul.username = u.username

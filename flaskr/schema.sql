@@ -5,18 +5,18 @@
  DROP  TABLE IF EXISTS UserLocation;
 
  CREATE TABLE IF NOT EXISTS Users (
-        username varchar [PRIMARY KEY, NOT NULL],
-        PasswordHash binary [NOT NULL],
+        username varchar PRIMARY KEY NOT NULL,
+        PasswordHash binary NOT NULL,
         firstName varchar,
         lastName varchar,
-        isInfected boolean,
-        isAdmin boolean
+        isInfected boolean DEFAULT FALSE,
+        isAdmin boolean DEFAULT FALSE
       );
 
  CREATE TABLE IF NOT EXISTS Location (
-        location_id int [NOT NULL, PRIMARY KEY],
-        name varchar [NOT NULL],
-        rate float [NOT NULL]
+        location_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name varchar NOT NULL,
+        rate float NOT NULL
       );
 
  CREATE TABLE IF NOT EXISTS UserLocation (
@@ -27,5 +27,7 @@
           foreign key(location_id)
               references Location(location_id),
           foreign key(username)
-              references Users(username)
+              references Users(username),
+          foreign key (rate)
+              references Location(rate)
        );

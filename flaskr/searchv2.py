@@ -7,7 +7,7 @@ from matplotlib.widgets import TextBox
 ###############
 def getPercetage(thisUser):
     G = nx.Graph()
-    con = sql.connect("schema.sqlite")
+    con = sql.connect("../instance/flaskr.sqlite")
     main = pd.read_sql_query("SELECT name, u.firstName, L.rate from UserLocation join Users U on UserLocation.username = U.username join Location L on UserLocation.location_id = L.location_id where entryTime >= (select entryTime from UserLocation where username in (select username from Users where isInfected = TRUE));", con)
     infectedUser = pd.read_sql_query( "select firstName from Users where isInfected = TRUE", con)
     locations = pd.read_sql_query("SELECT name, rate from location", con);
@@ -34,8 +34,32 @@ def getPercetage(thisUser):
     plt.axis('equal')
     pretty = "Your rate of infection is: {d}%".format(d =percentage * 100)
     plt.text(0.02, 0.02, pretty, fontsize=14, transform=plt.gcf().transFigure)
+    #report png static directory
     plt.show()
-getPercetage('Person E')
+
+def changeInfectedUser(thisUser):
+    con = sql.connect("../instance/flaskr.sqlite")
+    cur = con.cursor()
+    cur.execute("update users set isInfected = 0 where 1=1")
+    qry = "update users set isInfected = true where ? = username"
+    cur.execute(qry,(thisUser,) )
+    con.commit()
+
+def addLocation(name, rate):
+    con = sql.connect("../instance/flaskr.sqlite")
+    cur = con.cursor()
+    qry = "insert into location (name, rate) values(?, ?)"
+    cur.execute(qry, (name,rate))
+    con.commit()
+getPercetage("Lilas")
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,21 @@
+insert into Location (location_id, name, rate)  values (1,'Safeway',.06);
+insert into Location (location_id, name, rate)  values (2,'DB Supply',.03);
+insert into Location (location_id, name, rate)  values (3,'Library',.25);
+insert into Location (location_id, name, rate)  values (4,'Bobs Bar',.5);
+insert into location (name, rate) values ('Eastern Oregon University', 0.91);
+insert into location (name, rate) values ('Memorial pool', 0.65);
+insert into location (name, rate) values ('Side A Brewing', 0.71);
+insert into location (name, rate) values ('The Sac Annex', 0.09);
+insert into location (name, rate) values ('Hoke Union Building', 0.66);
+insert into location (name, rate) values ('Hines Meat co.', 0.16);
+insert into location (name, rate) values ('Candy Cane Park', 0.74);
+insert into location (name, rate) values ('LG Drive in', 0.02);
+insert into location (name, rate) values ('Garden Club Park', 0.57);
+insert into location (name, rate) values ('Brother Bear Cafe', 0.46);
+insert into location (name, rate) values ('Dutch Bros Coffee', 0.77);
+insert into location (name, rate) values ('Thai Fresh Gardens', 0.29);
+insert into location (name, rate) values ('Ace Hardware', 0.43);
+insert into location (name, rate) values ('Dennys's', 0.6);
+insert into location (name, rate) values ('Taco Time', 0.46);
+insert into location (name, rate) values ('MIRA', 0.62);
+
