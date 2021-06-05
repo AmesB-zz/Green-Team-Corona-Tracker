@@ -18,7 +18,7 @@
         Location: <SELECT name="location">
         {% for loc in locationList %}
 
-	    <OPTION value={{ loc }}>{{ loc }}</option>
+	    <OPTION value={{ loc.name }}>{{ loc.name }}</option>
         {% endfor %}}
         </SELECT><br>
 
@@ -29,10 +29,10 @@
         {% endfor %}
         </SELECT><br>
 
-
+        <input type="submit" value="Submit">
     </form>
 
-<input type="submit" value="Submit">
+
   {% endif %}
 
 {% endblock %}
