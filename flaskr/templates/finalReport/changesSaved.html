@@ -10,6 +10,7 @@
     {% if g.user %}
     <h2>Administrator</h2>
     <h2>Your changes have been saved, {{ g.user['firstName'] }}!</h2>
+    <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
 
     <h2></h2>
 
