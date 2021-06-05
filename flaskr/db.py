@@ -43,7 +43,7 @@ def init_db():
 
         db.execute(
             'INSERT INTO Users (username, passwordHash,firstName, lastName, isInfected, isAdmin) VALUES (?, ?, ?, ?, ?, ?)',
-            ('Dan', generate_password_hash('test'), 'Dan', 'Lea', False, False)
+            ('Admin', generate_password_hash('test'), 'Dan', 'Lea', False, True)
         )
         db.commit()
 
