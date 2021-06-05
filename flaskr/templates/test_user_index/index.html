@@ -10,6 +10,17 @@
 
 {% if g.user %}
     <h2>Hello {{ g.user['userName'] }}</h2>
+
+    <h4>Here you can change the infections status for one of the people currently in the database</h4>
+
+Select a user to change infected status <SELECT name="user">
+{% for u in userList %}
+	<OPTION value={{u.username}}>{{u.firstName + " " + u.lastName}}</option>
+{% endfor %}
+</SELECT>
+<br></br>
+
+<input type="submit" value="Submit">
   {% endif %}
 
 {% endblock %}
