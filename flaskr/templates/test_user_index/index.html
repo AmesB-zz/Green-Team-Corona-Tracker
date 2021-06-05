@@ -7,20 +7,22 @@
 
 {% block content %}
 
-
-{% if g.user %}
-    <h2>Hello {{ g.user['userName'] }}</h2>
+    {% if g.user %}
+    <h2>Administrator</h2>
+    <h2>Hello {{ g.user['firstName'] }}</h2>
 
     <h4>Here you can change the infections status for one of the people currently in the database</h4>
 
-Select a user to change infected status <SELECT name="user">
-{% for u in userList %}
-	<OPTION value={{u.username}}>{{u.firstName + " " + u.lastName}}</option>
-{% endfor %}
-</SELECT>
-<br></br>
+    <form method="post">
+        Select a user to change infected status <SELECT name="user">
+        {% for u in userList %}
 
-<input type="submit" value="Submit">
+	    <OPTION value={{u.username}}>{{u.firstName + " " + u.lastName}}</option>
+        {% endfor %}
+        </SELECT><br>
+
+        <input type="submit" value="Submit">
+    </form>
   {% endif %}
 
 {% endblock %}
