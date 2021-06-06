@@ -1,4 +1,4 @@
-insert into Users (username, passwordHash, firstName, lastName, isInfected) values ('eringwood0', '1c67b70543e45883e1e73484c1e4fdff83cd7bb251b25435aef6c25fb76004bc', 'Erin', 'Ringwood',TRUE);
+insert into Users (username, passwordHash, firstName, lastName, isInfected) values ('eringwood0', '1c67b70543e45883e1e73484c1e4fdff83cd7bb251b25435aef6c25fb76004bc', 'Erin', 'Ringwood',0);
 insert into Users (username, passwordHash, firstName, lastName) values ('cjanout1', '605d0f9eadc32746df2f04d3dff156f3a7511a5835f21c8a8c62aafd08c95986', 'Cheslie', 'Janout');
 insert into Users (username, passwordHash, firstName, lastName) values ('kstealfox2', '687319b342074d1abf82e3b5e3e1d8efb55a799e25545ef6b16bb4b3bd0447b0', 'Korry', 'Stealfox');
 insert into Users (username, passwordHash, firstName, lastName) values ('llegion3', 'cce9f6408719ccb4f4de4a2173622f602afe3bbff7be5d543136735a0bdbb8aa', 'Lilas', 'Legion');
