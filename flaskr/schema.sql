@@ -9,8 +9,8 @@
         PasswordHash binary NOT NULL,
         firstName varchar,
         lastName varchar,
-        isInfected boolean DEFAULT FALSE,
-        isAdmin boolean DEFAULT FALSE
+        isInfected boolean DEFAULT 0,
+        isAdmin boolean DEFAULT 0
       );
 
  CREATE TABLE IF NOT EXISTS Location (
