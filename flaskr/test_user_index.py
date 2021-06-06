@@ -66,4 +66,8 @@ def tux():
         else:
 
             # code for running graph
+
+            # add location table
+
+
             return render_template('finalReport/graph.html', message='not Admin')

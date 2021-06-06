@@ -15,6 +15,8 @@ from flask.cli import with_appcontext
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
+
+
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(
@@ -46,6 +48,8 @@ def init_db():
             ('Admin', generate_password_hash('test'), 'Dan', 'Lea', False, True)
         )
         db.commit()
+
+
 
 @click.command('init-db')
 @with_appcontext
