@@ -9,10 +9,10 @@
 
     {% if g.user %}
     <h2 style="color:#E9F7DE;">{{ g.user['firstName'] }}</h2>
-    <h2 style="color:#E9F7DE;">This graph shows where you had contact with your fellow users, due to HIPAA regulations only their usernames are available. </h2>
+    <h2 style="color:#E9F7DE;">Congrats, {{ g.user['firstName'] }}  you haven't has contact with anyone who has COVID19. </h2>
 
 
-    <img src="{{url_for('static', filename='graph.png')}}" align="middle" />
+    <img src="{{url_for('static', filename='meme.jpeg')}}" align="middle" />
     <h3 style="color:#E9F7DE;">Your probability of infection is:  {{ value }}%</h3>
     <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
 

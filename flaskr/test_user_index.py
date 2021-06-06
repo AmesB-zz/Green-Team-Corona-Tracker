@@ -1,11 +1,15 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
-import pandas as pd
 import functools
+import numpy
+import pandas as pd
+import matplotlib as plt
+import networkx as nx
+plt.use('agg')
 
 from werkzeug.exceptions import abort
-import sqlite3
+import sqlite3 as sql
 
 import click
 from flask import current_app, g
@@ -17,6 +21,48 @@ from .db import get_db
 
 
 bp = Blueprint('test_user_index', __name__)
+def getReport(thisUser):
+    G = nx.Graph()
+    con = get_db()
+    main = pd.read_sql_query("SELECT distinct name, u.username, L.rate from UserLocation join Users U on UserLocation.username = U.username join Location L on UserLocation.location_id = L.location_id where entryTime >= (select entryTime from UserLocation where username in (select username from Users where isInfected = TRUE));", con)
+    infectedUser = pd.read_sql_query( "select username from Users where isInfected = TRUE", con)
+
+    locations = pd.read_sql_query("SELECT name, rate from location", con);
+    infectedUserFlatten = infectedUser.values.flatten()
+    conn = sql.connect(':memory:')
+    G = nx.from_pandas_edgelist(main, 'username', 'name', edge_attr='rate')
+    if G.has_node(thisUser) is False:
+        info = 0
+        return(info)
+    else:
+        path = nx.shortest_path(G, source=infectedUserFlatten[0], target=thisUser)
+        shortestPath = {"Locations": path}
+        pathFrame = pd.DataFrame(data=shortestPath)
+        pathFrame.to_sql('pathFrame', conn, index=False)
+        locations.to_sql("location", conn, index=False)
+        qry = 'select * from location where name in (select * from pathFrame)'
+        result = pd.read_sql_query(qry, conn)
+        realRate = result['rate']
+        arr = realRate.values.flatten()
+        percentage = numpy.prod(arr)
+        pos = nx.spring_layout(G)
+        #nx.draw(G,pos, with_labels=True, font_weight='bold')
+        options = {"node_size": 500, "alpha": 0.9}
+        #nx.draw(G, pos, font_size=6, with_labels=True, node_color='#89CFF0',node_shape="p", font_weight='bold')
+        path_edges = list(zip(path, path[1:]))
+        labels = {k: k for k in path}
+        nx.draw_networkx_nodes(G, pos, nodelist=path, node_color='#89CFF0',node_shape="p", **options)
+        nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='#89CFF0',node_shape="p", width=10, **options)
+        nx.draw_networkx_labels(G, pos, labels)
+        #plt.axis('equal')
+        #pretty = "Your rate of infection is: {d}%".format(d =percentage * 100)
+        #plt.text(0.02, 0.02, pretty, fontsize=14, transform=plt.gcf().transFigure)
+        plt.pyplot.savefig('/Users/vitorpedrosa/PycharmProjects/Green-Team-Corona-Tracker/flaskr/static/graph.png')
+        return(percentage)
+
+
+
+
 
 def changeInfectedUser(thisUser):
     con = get_db()
@@ -92,6 +138,13 @@ def tux():
 
             db.commit()
 
+            percent = "{:.2f}".format(getReport(this_username))
 
 
-            return render_template('finalReport/graph.html', message='not Admin')
+            if(float(percent) > 0):
+                return render_template('finalReport/graph.html', message='not Admin', value = percent)
+            else:
+                return render_template('finalReport/newGraph.html', message='not Admin', value=percent)
+
+
+
