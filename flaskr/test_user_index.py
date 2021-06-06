@@ -65,9 +65,31 @@ def tux():
 
         else:
 
+            db = get_db()
+            this_username = g.user['username']
+
+            location = request.form['location']
+            time = request.form['time']
+
+            #adding user location
+            location_idf = db.execute(
+            'SELECT location_id FROM Location WHERE name = ?', (location,)
+            ).fetchone()
+
+            user_id = db.execute(
+                'SELECT rowid From Users WHERE username = ?' (this_username,)
+            ).fetchone()
+
+            db.execute(
+                'INSERT INTO UserLocation (location_id, entryTime, username) VALUES (?, ?, ?)',
+                (location_idf, time, user_id)
+            )
+            db.commit()
+
+
             # code for running graph
 
-            # add location table
+
 
 
             return render_template('finalReport/graph.html', message='not Admin')
