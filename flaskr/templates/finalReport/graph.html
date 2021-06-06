@@ -8,11 +8,13 @@
 {% block content %}
 
     {% if g.user %}
-    <h2>This graph shows ... {{ g.user['firstName'] }}</h2>
+    <h2>{{ g.user['firstName'] }}</h2>
+    <h2>This graph shows ... something blah blah blah</h2>
 
-    <img src="./exampleGraph.png" alt="graph">
+    <img src="{{url_for('static', filename='exampleGraph.png')}}" align="middle" />
 
     <h2>Your probability of infection is  %</h2>
+    <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
 
     {% endif %}
 

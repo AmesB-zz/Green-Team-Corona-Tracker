@@ -12,6 +12,8 @@ from flask.cli import with_appcontext
 
 from .auth import login_required
 from .db import get_db
+####
+from .searchv2 import changeInfectedUser
 
 bp = Blueprint('test_user_index', __name__)
 
@@ -54,7 +56,11 @@ def tux():
 
         if isAdmin:
 
+            infectedUser = request.form['user']
+
             # code to change database here
+            changeInfectedUser(infectedUser)
+
             return render_template('finalReport/changesSaved.html', message='Admin')
 
         else:
