@@ -63,7 +63,6 @@ def init_app(app):
     app.cli.add_command(init_db_command)
 
 def populate_test():
-    # con = sql.connect("../instance/flaskr.sqlite")
     con = get_db()
     cur = con.cursor()
     userLocations = open("./DB/populateUserLocation")

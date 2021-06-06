@@ -10,7 +10,6 @@ import networkx as nx
 def getReport(thisUser):
     G = nx.Graph()
     con = get_db()
-   # con = sql.connect("../instance/flaskr.sqlite")
     main = pd.read_sql_query("SELECT name, u.username, L.rate from UserLocation join Users U on UserLocation.username = U.username join Location L on UserLocation.location_id = L.location_id where entryTime >= (select entryTime from UserLocation where username in (select username from Users where isInfected = TRUE));", con)
     infectedUser = pd.read_sql_query( "select username from Users where isInfected = TRUE", con)
     locations = pd.read_sql_query("SELECT name, rate from location", con);
@@ -43,13 +42,6 @@ def getReport(thisUser):
     #report png static directory
     plt.show()
 
-def changeInfectedUser(thisUser):
-    con = get_db()
-    cur = con.cursor()
-    cur.execute("update users set isInfected = 0 where 1=1")
-    qry = "update users set isInfected = 1 where ? = username"
-    cur.execute(qry,(thisUser,) )
-    con.commit()
 
 def addLocation(name, rate):
     con = get_db()

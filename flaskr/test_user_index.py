@@ -1,6 +1,7 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
+import pandas as pd
 import functools
 
 from werkzeug.exceptions import abort
@@ -13,11 +14,17 @@ from flask.cli import with_appcontext
 from .auth import login_required
 from .db import get_db
 ####
-from .searchv2 import changeInfectedUser
+
 
 bp = Blueprint('test_user_index', __name__)
 
-
+def changeInfectedUser(thisUser):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("update users set isInfected = 0 where 1=1")
+    qry = "update users set isInfected = 1 where ? = username"
+    cur.execute(qry,(thisUser,) )
+    con.commit()
 
 @bp.route('/user_index', methods=['GET', 'POST'])
 @login_required
@@ -66,29 +73,24 @@ def tux():
         else:
 
             db = get_db()
+            cur = db.cursor()
             this_username = g.user['username']
-
             location = request.form['location']
             time = request.form['time']
 
-            #adding user location
-            location_idf = db.execute(
-            'SELECT location_id FROM Location WHERE name = ?', (location,)
-            ).fetchone()
-
-            user_id = db.execute(
-                'SELECT rowid From Users WHERE username = ?' (this_username,)
-            ).fetchone()
+            qry = 'SELECT location_id FROM Location WHERE name LIKE "{fname}%"'.format(fname = location)
+            location_idf = pd.read_sql_query(qry, db)
+            newLocation = location_idf.values.flatten()
 
             db.execute(
                 'INSERT INTO UserLocation (location_id, entryTime, username) VALUES (?, ?, ?)',
-                (location_idf, time, user_id)
+                (int(newLocation[0]), str(time), str(this_username))
             )
+
+            cur.execute(
+                "update UserLocation set rate = (select rate from Location where location_id = UserLocation.location_id) where exists (select rate from Location where location_id = UserLocation.location_id);")
+
             db.commit()
-
-
-            # code for running graph
-
 
 
 
