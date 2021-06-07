@@ -9,7 +9,7 @@
 
     {% if g.user %}
     <h2>Administrator</h2>
-    <h2>Your changes have been saved, {{ g.user['firstName'] }} {{location}}!</h2>
+    <h2>Your changes have been saved, {{ g.user['firstName'] }}!</h2>
     <li><a href="{{ url_for('test_user_index.tux') }}">Go back to Admin Menu</a>
     <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
 

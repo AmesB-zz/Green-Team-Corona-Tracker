@@ -15,15 +15,17 @@
 
 
  <form method="post">
-        Select location and rate <SELECT name="location">
-        {% for l in locationList %}
-	    <OPTION value={{l.name}}>{{l.name}}</option>
-        {% endfor %}
+        Select location<SELECT name ="location">
+
+        {% for loc in locationList %}
+
+	    <OPTION value={{ loc.name }}>{{ loc.name }}</option>
+        {% endfor %}}
         </SELECT><br>
 
         Select the percent probability of infection for this location <SELECT name="prob">
         {% for x in percents %}
-	    <OPTION value={{ x }}>{{ x }}  {{"%"}}</option>
+	    <OPTION value={{ x }}>{{ x }}{{"%"}}</option>
         {% endfor %}
         </SELECT><br>
 
