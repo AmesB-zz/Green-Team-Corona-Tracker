@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 style="color:#E9F7DE;">{% block title %}USER MENU{% endblock %}</h1>
+
+{% endblock %}
+
+{% block content %}
+
+    {% if g.user %}
+    <h2 style="color:#E9F7DE;">Administrator</h2>
+    <h2 style="color:#E9F7DE;">Your changes have been saved, {{ g.user['firstName'] }}!</h2>
+    <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+
+    <h2></h2>
+
+    {% endif %}
+
+{% endblock %}

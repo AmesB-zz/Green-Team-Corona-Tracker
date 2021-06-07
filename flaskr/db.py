@@ -43,9 +43,13 @@ def init_db():
 
         db.execute(
             'INSERT INTO Users (username, passwordHash,firstName, lastName, isInfected, isAdmin) VALUES (?, ?, ?, ?, ?, ?)',
-            ('Dan', generate_password_hash('test'), 'Dan', 'Lea', False, False)
+            ('Admin', generate_password_hash('test'), 'Dan', 'Lea', False, True)
         )
         db.commit()
+
+        populate_test()
+
+
 
 @click.command('init-db')
 @with_appcontext
@@ -57,3 +61,21 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+
+def populate_test():
+    con = get_db()
+    cur = con.cursor()
+    userLocations = open("./DB/populateUserLocation")
+    locations = open("./DB/populateLocation")
+    users = open("./DB/populateUsers")
+    userLocationsSql = userLocations.read()
+    locationsSql = locations.read()
+    usersSql = users.read()
+    cur.executescript(userLocationsSql)
+    cur.executescript(usersSql)
+    cur.executescript(locationsSql)
+    cur.execute(
+        "update UserLocation set rate = (select rate from Location where location_id = UserLocation.location_id) where exists (select rate from Location where location_id = UserLocation.location_id);")
+    cur.execute(
+        "update UserLocation set username = (select u.username from Users u where UserLocation.username = u.ROWID);")
+    con.commit()

@@ -15,7 +15,6 @@ insert into location (name, rate) values ('Brother Bear Cafe', 0.46);
 insert into location (name, rate) values ('Dutch Bros Coffee', 0.77);
 insert into location (name, rate) values ('Thai Fresh Gardens', 0.29);
 insert into location (name, rate) values ('Ace Hardware', 0.43);
-insert into location (name, rate) values ('Dennys's', 0.6);
+insert into location (name, rate) values ('Dennies', 0.6);
 insert into location (name, rate) values ('Taco Time', 0.46);
 insert into location (name, rate) values ('MIRA', 0.62);
-

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}USER MENU{% endblock %}</h1>
+
+{% endblock %}
+
+{% block content %}
+
+
+{% if g.user %}
+    <h2 style="color:#E9F7DE;">Hello {{ g.user['firstName'] }}</h2>
+
+    <h4 style="color:#E9F7DE;">Please enter the location that you where at today and what time you where at that location:</h4>
+
+    <form method="post" style="color:#E9F7DE;">
+
+        Location: <SELECT name ="location">
+        {% for loc in locationList %}
+
+	    <OPTION value={{ loc.name }}>{{ loc.name }}</option>
+        {% endfor %}}
+        </SELECT><br>
+
+        Time: <SELECT name="time">
+        {% for time in timeList %}
+
+	    <OPTION value={{ time }}>{{ time }}</option>
+        {% endfor %}
+        </SELECT><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+
+  {% endif %}
+
+{% endblock %}
