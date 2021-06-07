@@ -176,4 +176,29 @@ def adminLocProb():
         if isAdmin:
             locationList = get_db().execute("SELECT * FROM Location order by name")
 
-            return render_template('test_user_index/change_loc_prob.html', locationList=locationList)
+            #generate list of percents
+            percents = []
+            start = 0
+            for x in range(0, 101):
+                percents.append(start)
+                start = start + 1
+
+
+            return render_template('test_user_index/change_loc_prob.html', locationList=locationList, percents=percents)
+
+    elif request.method == 'POST':
+
+        changeLocation = str(request.form['location'])
+        percent_probability = request.form['prob']
+        infect_probablity = float(percent_probability) * 0.01
+
+
+
+        #code to change probablity
+
+        changeRate(infect_probablity, str(changeLocation))
+
+
+
+        return render_template('finalReport/changesSaved.html', message='Admin', location = str(changeLocation), percent = percent_probability)
+

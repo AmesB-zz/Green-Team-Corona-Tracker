@@ -20,7 +20,13 @@
 	    <OPTION value={{l.name}}>{{l.name}}</option>
         {% endfor %}
         </SELECT><br>
-        <input type=""  name="vehicle3" value="0">
+
+        Select the percent probability of infection for this location <SELECT name="prob">
+        {% for x in percents %}
+	    <OPTION value={{ x }}>{{ x }}  {{"%"}}</option>
+        {% endfor %}
+        </SELECT><br>
+
         <input type="submit" value="Submit">
     </form>
   {% endif %}
