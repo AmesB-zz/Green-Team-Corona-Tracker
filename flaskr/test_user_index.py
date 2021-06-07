@@ -24,8 +24,8 @@ bp = Blueprint('test_user_index', __name__)
 def getReport(thisUser):
     G = nx.Graph()
     con = get_db()
-    main = pd.read_sql_query("SELECT distinct name, u.username, L.rate from UserLocation join Users U on UserLocation.username = U.username join Location L on UserLocation.location_id = L.location_id where entryTime >= (select entryTime from UserLocation where username in (select username from Users where isInfected = TRUE));", con)
-    infectedUser = pd.read_sql_query( "select username from Users where isInfected = TRUE", con)
+    main = pd.read_sql_query("SELECT distinct name, u.username, L.rate from UserLocation join Users U on UserLocation.username = U.username join Location L on UserLocation.location_id = L.location_id where entryTime >= (select entryTime from UserLocation where username in (select username from Users where isInfected = 1));", con)
+    infectedUser = pd.read_sql_query( "select username from Users where isInfected = 1", con)
 
     locations = pd.read_sql_query("SELECT name, rate from location", con);
     infectedUserFlatten = infectedUser.values.flatten()

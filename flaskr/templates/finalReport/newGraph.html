@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}USER MENU{% endblock %}</h1>
+  <h1>{% block title %}Results{% endblock %}</h1>
 
 {% endblock %}
 
@@ -9,11 +9,12 @@
 
     {% if g.user %}
     <h2>{{ g.user['firstName'] }}</h2>
-    <h2>Congrats, {{ g.user['firstName'] }}  you haven't has contact with anyone who has COVID19. </h2>
+    <h2>You haven't has contact with anyone infected with COVID19. </h2>
 
 
-    <img src="{{url_for('static', filename='meme.jpeg')}}" align="middle" />
-    <h3 style="color:#E9F7DE;">Your probability of infection is:  {{ value }}%</h3>
+    <img src="{{url_for('static', filename='checkMark.jpeg')}}" align="middle" />
+    <h3 >Your probability of infection is:  {{ value }}%</h3>
+    <li><a href="{{ url_for('test_user_index.tux') }}">Enter another location</a>
     <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
 
     {% endif %}
