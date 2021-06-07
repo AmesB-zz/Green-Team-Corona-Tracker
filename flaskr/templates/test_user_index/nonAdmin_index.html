@@ -9,11 +9,11 @@
 
 
 {% if g.user %}
-    <h2 style="color:#E9F7DE;">Hello {{ g.user['firstName'] }}</h2>
+    <h2>Hello {{ g.user['firstName'] }}</h2>
 
-    <h4 style="color:#E9F7DE;">Please enter the location that you where at today and what time you where at that location:</h4>
+    <h4>Please enter the location that you where at today and what time you where at that location:</h4>
 
-    <form method="post" style="color:#E9F7DE;">
+    <form method="post">
 
         Location: <SELECT name ="location">
         {% for loc in locationList %}
