@@ -57,7 +57,9 @@ def getReport(thisUser):
         #plt.axis('equal')
         #pretty = "Your rate of infection is: {d}%".format(d =percentage * 100)
         #plt.text(0.02, 0.02, pretty, fontsize=14, transform=plt.gcf().transFigure)
-        plt.pyplot.savefig('/Users/vitorpedrosa/PycharmProjects/Green-Team-Corona-Tracker/flaskr/static/graph.png')
+        #plt.pyplot.savefig('/Users/vitorpedrosa/PycharmProjects/Green-Team-Corona-Tracker/flaskr/static/graph.png')
+        #changed to reference based file path
+        plt.pyplot.savefig('./flaskr/static/graph.png')
         return(percentage)
 def changeRate(thisRate, thislocation):
     con = get_db()
