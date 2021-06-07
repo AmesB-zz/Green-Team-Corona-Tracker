@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}USER MENU{% endblock %}</h1>
+  <h1>{% block title %}Admin Menu{% endblock %}</h1>
 
 {% endblock %}
 
@@ -11,17 +11,11 @@
     <h2>Administrator</h2>
     <h2>Hello {{ g.user['firstName'] }}</h2>
 
-    <h4>Here you can change the infections status for one of the people currently in the database</h4>
+    <h4>Select from the following options</h4>
 
-    <form method="post">
-        Select a user to change infected status <SELECT name="user">
-        {% for u in userList %}
 
-	    <OPTION value={{u.username}}>{{u.firstName + " " + u.lastName}}</option>
-        {% endfor %}
-        </SELECT><br>
-        <input type="submit" value="Submit">
-    </form>
+
+    <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
 <!---
  <form method="post">
         Select location and rate <SELECT name="location">
