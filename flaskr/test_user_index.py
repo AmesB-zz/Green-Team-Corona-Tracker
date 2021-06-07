@@ -1,24 +1,24 @@
+'''
+Functions that support the user menus for both Adminstrators and registered
+users are in this class.
+'''
+
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, render_template, request
 )
-import functools
 import numpy
 import pandas as pd
 import matplotlib as plt
 import networkx as nx
 plt.use('agg')
 
-from werkzeug.exceptions import abort
 import sqlite3 as sql
 
-import click
-from flask import current_app, g
-from flask.cli import with_appcontext
+from flask import  g
 
 from .auth import login_required
 from .db import get_db
 ####
-
 
 bp = Blueprint('test_user_index', __name__)
 def getReport(thisUser):
@@ -113,11 +113,10 @@ def tux():
 
             db = get_db()
             cur = db.cursor()
+            #get data from form
             this_username = g.user['username']
             location = request.form['location']
             time = request.form['time']
-
-
 
             qry = 'SELECT location_id FROM Location WHERE name LIKE "{fname}%"'.format(fname = location)
             location_idf = pd.read_sql_query(qry, db)
@@ -135,7 +134,7 @@ def tux():
 
             percent = "{:.2f}".format(getReport(this_username))
 
-
+            #print results
             if(float(percent) > 0):
                 return render_template('finalReport/graph.html', message='not Admin', value = percent)
             else:
@@ -159,8 +158,10 @@ def adminPageInfect():
 
     elif request.method == 'POST':
 
+        #get username from form
         infectedUser = request.form['user']
 
+        #execute change
         changeInfectedUser(infectedUser)
 
         return render_template('finalReport/changesSaved.html', message='Admin')
@@ -190,26 +191,13 @@ def adminLocProb():
 
     elif request.method == 'POST':
 
+        #get data from form
         changeLocation = request.form['location'] +"%"
         percent_probability = request.form['prob']
         infect_probablity = float(percent_probability) * 0.01
 
-        #debug
-        print(changeLocation)
-        print(infect_probablity)
-        db = get_db()
-
-        # db.execute(
-        #     'UPDATE Location SET rate = 0 WHERE name LIKE ?% (changeLocation)'
-        # )
-        # db.commit()
-
-
-
         #code to change probablity
         changeRate(infect_probablity, changeLocation)
-
-
 
         return render_template('finalReport/changesSaved.html', message='Admin', location = changeLocation, percent = percent_probability)
 

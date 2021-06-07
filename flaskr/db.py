@@ -12,7 +12,7 @@ import sqlite3
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import  generate_password_hash
 
 
 def get_db():
