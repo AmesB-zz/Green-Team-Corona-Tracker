@@ -15,17 +15,8 @@
 
 
     <li><a href="{{ url_for('test_user_index.adminPageInfect') }}">Mark a user infected</a>
+    <li><a href="{{ url_for('test_user_index.adminLocProb') }}">Change a location's Probability</a>
     <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
-<!---
- <form method="post">
-        Select location and rate <SELECT name="location">
-        {% for u in locationList %}
-	    <OPTION value={{u.name}}>{{u.name}}</option>
-        {% endfor %}
-        </SELECT><br>
-        <input type=""  name="vehicle3" value="0">
-        <input type="submit" value="Submit NEW INFECTION RATE">
-    </form>
+
   {% endif %}
---->
 {% endblock %}

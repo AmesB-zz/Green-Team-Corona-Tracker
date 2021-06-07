@@ -167,7 +167,7 @@ def adminPageInfect():
 
 @bp.route('/user_index_change_prob', methods=['GET', 'POST'])
 @login_required
-def adminPageInfect():
+def adminLocProb():
 
     isAdmin = g.user['isAdmin']
 
@@ -176,4 +176,4 @@ def adminPageInfect():
         if isAdmin:
             locationList = get_db().execute("SELECT * FROM Location order by name")
 
-            return render_template('test_user_index/index.html', locationList=locationList)
+            return render_template('test_user_index/change_loc_prob.html', locationList=locationList)
