@@ -8,12 +8,12 @@
 {% block content %}
 
     {% if g.user %}
-    <h2 style="color:#E9F7DE;">Administrator</h2>
-    <h2 style="color:#E9F7DE;">Hello {{ g.user['firstName'] }}</h2>
+    <h2>Administrator</h2>
+    <h2>Hello {{ g.user['firstName'] }}</h2>
 
-    <h4 style="color:#E9F7DE;">Here you can change the infections status for one of the people currently in the database</h4>
+    <h4>Here you can change the infections status for one of the people currently in the database</h4>
 
-    <form method="post" style="color:#E9F7DE;">
+    <form method="post">
         Select a user to change infected status <SELECT name="user">
         {% for u in userList %}
 
@@ -23,7 +23,7 @@
         <input type="submit" value="Submit NEW INFECTED USER">
     </form>
 
- <form method="post" style="color:#E9F7DE;">
+ <form method="post">
         Select location and rate <SELECT name="location">
         {% for u in locationList %}
 	    <OPTION value={{u.name}}>{{u.name}}</option>

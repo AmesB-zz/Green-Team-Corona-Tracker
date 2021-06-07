@@ -8,8 +8,8 @@
 {% block content %}
 
     {% if g.user %}
-    <h2 style="color:#E9F7DE;">{{ g.user['firstName'] }}</h2>
-    <h2 style="color:#E9F7DE;">Congrats, {{ g.user['firstName'] }}  you haven't has contact with anyone who has COVID19. </h2>
+    <h2>{{ g.user['firstName'] }}</h2>
+    <h2>Congrats, {{ g.user['firstName'] }}  you haven't has contact with anyone who has COVID19. </h2>
 
 
     <img src="{{url_for('static', filename='meme.jpeg')}}" align="middle" />

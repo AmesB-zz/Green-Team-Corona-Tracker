@@ -1,17 +1,17 @@
-html { font-family: "Comic Sans MS", "Comic Sans", cursive; background: #04E08F; padding: 1rem; }
-body { max-width: 860px; margin: 0 auto; background: #023870;}
-h1 { font-family: serif; color: #E9F7DE; margin: 1rem 0; }
-a { color: #E9F7DE; }
+html { font-family: "Arial", "Arial", cursive; background: #fdfdfd; padding: 1rem; }
+body { max-width: 860px; margin: 0 auto; background: #d7dde7;}
+h1 { font-family: serif; color: #000000; margin: 1rem 0; }
+a { color: #000000; }
 hr { border: none; border-top: 1px solid lightgray; }
-nav { background: #023870; display: flex; align-items: center; padding: 0 0.5rem; }
+nav { background: #8d9d9e; display: flex; align-items: center; padding: 0 0.5rem; }
 nav h1 { flex: auto; margin: 0; }
 nav h1 a { text-decoration: none; padding: 0.25rem 0.5rem; }
 nav ul  { display: flex; list-style: none; margin: 0; padding: 0; }
 nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 .content { padding: 0 1rem 1rem; }
-.content > header { border-bottom: 1px solid white; display: flex; align-items: flex-end; }
+.content > header { border-bottom: 1px solid #9a9191; display: flex; align-items: flex-end; }
 .content > header h1 { flex: auto; margin: 1rem 0 0.25rem 0; }
-.flash { margin: 1em 0; padding: 1em; background: #023870; border: 1px solid #E9F7DE; }
+.flash { margin: 1em 0; padding: 1em; background: #023870; border: 1px solid #0a0a09; }
 .post > header { display: flex; align-items: flex-end; font-size: 0.85em; }
 .post > header > div:first-of-type { flex: auto; }
 .post > header h1 { font-size: 1.5em; margin-bottom: 0; }

@@ -8,12 +8,12 @@
 {% block content %}
 
     {% if g.user %}
-    <h2 style="color:#E9F7DE;">{{ g.user['firstName'] }}</h2>
-    <h2 style="color:#E9F7DE;">This graph shows where you had contact with your fellow users, due to HIPAA regulations only their usernames are available. </h2>
+    <h2>{{ g.user['firstName'] }}</h2>
+    <h2>This graph shows where you had contact with your fellow users, due to HIPAA regulations only their usernames are available. </h2>
 
 
     <img src="{{url_for('static', filename='graph.png')}}" align="middle" />
-    <h3 style="color:#E9F7DE;">Your probability of infection is:  {{ value }}%</h3>
+    <h3>Your probability of infection is:  {{ value }}%</h3>
     <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
 
     {% endif %}
