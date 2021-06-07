@@ -62,7 +62,7 @@ def getReport(thisUser):
 def changeRate(thisRate, thislocation):
     con = get_db()
     cur = con.cursor()
-    qry = "update Location set rate = ? where name = ?"
+    qry = "update Location set rate = ? where name LIKE ?"
     cur.execute(qry, (thisRate,thislocation,))
     con.commit()
 
@@ -116,6 +116,8 @@ def tux():
             this_username = g.user['username']
             location = request.form['location']
             time = request.form['time']
+
+
 
             qry = 'SELECT location_id FROM Location WHERE name LIKE "{fname}%"'.format(fname = location)
             location_idf = pd.read_sql_query(qry, db)
@@ -188,16 +190,23 @@ def adminLocProb():
 
     elif request.method == 'POST':
 
-        changeLocation = request.form['location']
+        changeLocation = request.form['location'] +"%"
         percent_probability = request.form['prob']
         infect_probablity = float(percent_probability) * 0.01
 
+        #debug
         print(changeLocation)
+        print(infect_probablity)
+        db = get_db()
+
+        # db.execute(
+        #     'UPDATE Location SET rate = 0 WHERE name LIKE ?% (changeLocation)'
+        # )
+        # db.commit()
 
 
 
         #code to change probablity
-
         changeRate(infect_probablity, changeLocation)
 
 
