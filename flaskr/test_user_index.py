@@ -150,9 +150,8 @@ def adminPageInfect():
     if request.method == 'GET':
 
         if isAdmin:
-            # go to admin page
-            # Disclude the admin????
-            userList= get_db().execute("SELECT * FROM Users order by username")
+
+            userList= get_db().execute("SELECT * FROM Users WHERE isAdmin = 0 order by username")
             #locationList = get_db().execute("SELECT * FROM Location order by name")
             return render_template('test_user_index/index.html', userList=userList)
 
@@ -166,6 +165,15 @@ def adminPageInfect():
 
 
 
-# @bp.route('/user_index', methods=['GET', 'POST'])
-# @login_required
-# def adminPageInfect():
+@bp.route('/user_index_change_prob', methods=['GET', 'POST'])
+@login_required
+def adminPageInfect():
+
+    isAdmin = g.user['isAdmin']
+
+    if request.method == 'GET':
+
+        if isAdmin:
+            locationList = get_db().execute("SELECT * FROM Location order by name")
+
+            return render_template('test_user_index/index.html', locationList=locationList)
