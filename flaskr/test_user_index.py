@@ -85,11 +85,7 @@ def tux():
 
 
         if isAdmin:
-            # go to admin page
-            # Disclude the admin????
-            userList= get_db().execute("SELECT * FROM Users order by username")
-            locationList = get_db().execute("SELECT * FROM Location order by name")
-            return render_template('test_user_index/index.html', userList=userList,locationList=locationList)
+            return render_template('test_user_index/adminOptions.html')
 
         else:
 
@@ -110,13 +106,8 @@ def tux():
 
 
         if isAdmin:
-
-            infectedUser = request.form['user']
-
-
-            changeInfectedUser(infectedUser)
-
-            return render_template('finalReport/changesSaved.html', message='Admin')
+            #dummy code
+            dummy = 0
 
         else:
 
@@ -150,3 +141,31 @@ def tux():
 
 
 
+@bp.route('/user_index_infect', methods=['GET', 'POST'])
+@login_required
+def adminPageInfect():
+
+    isAdmin = g.user['isAdmin']
+
+    if request.method == 'GET':
+
+        if isAdmin:
+            # go to admin page
+            # Disclude the admin????
+            userList= get_db().execute("SELECT * FROM Users order by username")
+            #locationList = get_db().execute("SELECT * FROM Location order by name")
+            return render_template('test_user_index/index.html', userList=userList)
+
+    elif request.method == 'POST':
+
+        infectedUser = request.form['user']
+
+        changeInfectedUser(infectedUser)
+
+        return render_template('finalReport/changesSaved.html', message='Admin')
+
+
+
+# @bp.route('/user_index', methods=['GET', 'POST'])
+# @login_required
+# def adminPageInfect():

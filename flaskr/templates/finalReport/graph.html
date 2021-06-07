@@ -14,6 +14,7 @@
 
     <img src="{{url_for('static', filename='graph.png')}}" align="middle" />
     <h3>Your probability of infection is:  {{ value }}%</h3>
+    <li><a href="{{ url_for('test_user_index.tux') }}">Enter another location</a>
     <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
 
     {% endif %}
