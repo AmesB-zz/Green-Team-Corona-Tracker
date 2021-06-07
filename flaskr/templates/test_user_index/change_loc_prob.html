@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}ADMIN MENU{% endblock %}</h1>
+
+{% endblock %}
+
+{% block content %}
+
+    {% if g.user %}
+    <h2>Administrator</h2>
+    <h2>Hello {{ g.user['firstName'] }}</h2>
+
+    <h4>Here you can change the probability of infection based on location</h4>
+
+
+ <form method="post">
+        Select location and rate <SELECT name="location">
+        {% for l in locationList %}
+	    <OPTION value={{l.name}}>{{l.name}}</option>
+        {% endfor %}
+        </SELECT><br>
+        <input type=""  name="vehicle3" value="0">
+        <input type="submit" value="Submit">
+    </form>
+  {% endif %}
+
+{% endblock %}

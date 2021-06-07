@@ -24,8 +24,8 @@ bp = Blueprint('test_user_index', __name__)
 def getReport(thisUser):
     G = nx.Graph()
     con = get_db()
-    main = pd.read_sql_query("SELECT distinct name, u.username, L.rate from UserLocation join Users U on UserLocation.username = U.username join Location L on UserLocation.location_id = L.location_id where entryTime >= (select entryTime from UserLocation where username in (select username from Users where isInfected = TRUE));", con)
-    infectedUser = pd.read_sql_query( "select username from Users where isInfected = TRUE", con)
+    main = pd.read_sql_query("SELECT distinct name, u.username, L.rate from UserLocation join Users U on UserLocation.username = U.username join Location L on UserLocation.location_id = L.location_id where entryTime >= (select entryTime from UserLocation where username in (select username from Users where isInfected = 1));", con)
+    infectedUser = pd.read_sql_query( "select username from Users where isInfected = 1", con)
 
     locations = pd.read_sql_query("SELECT name, rate from location", con);
     infectedUserFlatten = infectedUser.values.flatten()
@@ -85,11 +85,7 @@ def tux():
 
 
         if isAdmin:
-            # go to admin page
-            # Disclude the admin????
-            userList= get_db().execute("SELECT * FROM Users order by username")
-            locationList = get_db().execute("SELECT * FROM Location order by name")
-            return render_template('test_user_index/index.html', userList=userList,locationList=locationList)
+            return render_template('test_user_index/adminOptions.html')
 
         else:
 
@@ -110,13 +106,8 @@ def tux():
 
 
         if isAdmin:
-
-            infectedUser = request.form['user']
-
-
-            changeInfectedUser(infectedUser)
-
-            return render_template('finalReport/changesSaved.html', message='Admin')
+            #dummy code
+            dummy = 0
 
         else:
 
@@ -150,3 +141,39 @@ def tux():
 
 
 
+@bp.route('/user_index_infect', methods=['GET', 'POST'])
+@login_required
+def adminPageInfect():
+
+    isAdmin = g.user['isAdmin']
+
+    if request.method == 'GET':
+
+        if isAdmin:
+
+            userList= get_db().execute("SELECT * FROM Users WHERE isAdmin = 0 order by username")
+            #locationList = get_db().execute("SELECT * FROM Location order by name")
+            return render_template('test_user_index/index.html', userList=userList)
+
+    elif request.method == 'POST':
+
+        infectedUser = request.form['user']
+
+        changeInfectedUser(infectedUser)
+
+        return render_template('finalReport/changesSaved.html', message='Admin')
+
+
+
+@bp.route('/user_index_change_prob', methods=['GET', 'POST'])
+@login_required
+def adminLocProb():
+
+    isAdmin = g.user['isAdmin']
+
+    if request.method == 'GET':
+
+        if isAdmin:
+            locationList = get_db().execute("SELECT * FROM Location order by name")
+
+            return render_template('test_user_index/change_loc_prob.html', locationList=locationList)
