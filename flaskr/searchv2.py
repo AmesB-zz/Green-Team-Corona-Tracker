@@ -19,7 +19,6 @@ def getReport(thisUser):
         info = "You haven't had contact with an infected User"
         return(info)
     else:
-
         path = nx.shortest_path(G, source=infectedUserFlatten[0], target=thisUser)
         shortestPath = {"Locations": path}
         pathFrame = pd.DataFrame(data=shortestPath)

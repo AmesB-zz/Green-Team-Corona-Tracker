@@ -59,10 +59,12 @@ def getReport(thisUser):
         #plt.text(0.02, 0.02, pretty, fontsize=14, transform=plt.gcf().transFigure)
         plt.pyplot.savefig('/Users/vitorpedrosa/PycharmProjects/Green-Team-Corona-Tracker/flaskr/static/graph.png')
         return(percentage)
-
-
-
-
+def changeRate(thisRate, thislocation):
+    con = get_db()
+    cur = con.cursor()
+    qry = "update Location set rate = ? where name = ?"
+    cur.execute(qry, (thisRate,thislocation,))
+    con.commit()
 
 def changeInfectedUser(thisUser):
     con = get_db()
@@ -86,8 +88,8 @@ def tux():
             # go to admin page
             # Disclude the admin????
             userList= get_db().execute("SELECT * FROM Users order by username")
-
-            return render_template('test_user_index/index.html', userList=userList)
+            locationList = get_db().execute("SELECT * FROM Location order by name")
+            return render_template('test_user_index/index.html', userList=userList,locationList=locationList)
 
         else:
 
@@ -111,7 +113,7 @@ def tux():
 
             infectedUser = request.form['user']
 
-            # code to change database here
+
             changeInfectedUser(infectedUser)
 
             return render_template('finalReport/changesSaved.html', message='Admin')

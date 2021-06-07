@@ -20,8 +20,17 @@
 	    <OPTION value={{u.username}}>{{u.firstName + " " + u.lastName}}</option>
         {% endfor %}
         </SELECT><br>
+        <input type="submit" value="Submit NEW INFECTED USER">
+    </form>
 
-        <input type="submit" value="Submit">
+ <form method="post" style="color:#E9F7DE;">
+        Select location and rate <SELECT name="location">
+        {% for u in locationList %}
+	    <OPTION value={{u.name}}>{{u.name}}</option>
+        {% endfor %}
+        </SELECT><br>
+        <input type=""  name="vehicle3" value="0">
+        <input type="submit" value="Submit NEW INFECTION RATE">
     </form>
   {% endif %}
 
