@@ -17,12 +17,12 @@ import sqlite3 as sql
 from flask import  g
 
 from .auth import login_required
+import matplotlib.pyplot as plt
 from .db import get_db
 ####
 
 bp = Blueprint('test_user_index', __name__)
 def getReport(thisUser):
-    G = nx.Graph()
     con = get_db()
     main = pd.read_sql_query("SELECT distinct name, u.username, L.rate from UserLocation join Users U on UserLocation.username = U.username join Location L on UserLocation.location_id = L.location_id where entryTime >= (select entryTime from UserLocation where username in (select username from Users where isInfected = 1));", con)
     infectedUser = pd.read_sql_query( "select username from Users where isInfected = 1", con)
@@ -47,19 +47,18 @@ def getReport(thisUser):
         percentage = numpy.prod(arr)
         pos = nx.spring_layout(G)
         #nx.draw(G,pos, with_labels=True, font_weight='bold')
-        options = {"node_size": 500, "alpha": 0.9}
+        options = {"node_size": 1000, "alpha": 0.9}
         #nx.draw(G, pos, font_size=6, with_labels=True, node_color='#89CFF0',node_shape="p", font_weight='bold')
         path_edges = list(zip(path, path[1:]))
         labels = {k: k for k in path}
-        nx.draw_networkx_nodes(G, pos, nodelist=path, node_color='#89CFF0',node_shape="p", **options)
-        nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='#89CFF0',node_shape="p", width=10, **options)
+        nx.draw_networkx_nodes(G, pos, nodelist=path, node_color='#89CFF0',node_shape="o", **options)
+        nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='#89CFF0',node_shape="p",**options)
         nx.draw_networkx_labels(G, pos, labels)
-        #plt.axis('equal')
-        #pretty = "Your rate of infection is: {d}%".format(d =percentage * 100)
-        #plt.text(0.02, 0.02, pretty, fontsize=14, transform=plt.gcf().transFigure)
-        #plt.pyplot.savefig('/Users/vitorpedrosa/PycharmProjects/Green-Team-Corona-Tracker/flaskr/static/graph.png')
-        #changed to reference based file path
-        plt.pyplot.savefig('./flaskr/static/graph.png')
+        plt.axis('off')
+        axis = plt.gca()
+        axis.set_xlim([1.8 * x for x in axis.get_xlim()])
+        axis.set_ylim([1.8 * y for y in axis.get_ylim()])
+        plt.savefig('./flaskr/static/graph.png',bbox_inches="tight")
         return(percentage)
 def changeRate(thisRate, thislocation):
     con = get_db()
