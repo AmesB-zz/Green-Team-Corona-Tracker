@@ -1,28 +1,28 @@
+'''
+Functions that support the user menus for both Adminstrators and registered
+users are in this class.
+'''
+
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, render_template, request
 )
-import functools
 import numpy
 import pandas as pd
 import matplotlib as plt
 import networkx as nx
 plt.use('agg')
 
-from werkzeug.exceptions import abort
 import sqlite3 as sql
 
-import click
-from flask import current_app, g
-from flask.cli import with_appcontext
+from flask import  g
 
 from .auth import login_required
+import matplotlib.pyplot as plt
 from .db import get_db
 ####
 
-
 bp = Blueprint('test_user_index', __name__)
 def getReport(thisUser):
-    G = nx.Graph()
     con = get_db()
     main = pd.read_sql_query("SELECT distinct name, u.username, L.rate from UserLocation join Users U on UserLocation.username = U.username join Location L on UserLocation.location_id = L.location_id where entryTime >= (select entryTime from UserLocation where username in (select username from Users where isInfected = 1));", con)
     infectedUser = pd.read_sql_query( "select username from Users where isInfected = 1", con)
@@ -47,23 +47,23 @@ def getReport(thisUser):
         percentage = numpy.prod(arr)
         pos = nx.spring_layout(G)
         #nx.draw(G,pos, with_labels=True, font_weight='bold')
-        options = {"node_size": 500, "alpha": 0.9}
+        options = {"node_size": 1000, "alpha": 0.9}
         #nx.draw(G, pos, font_size=6, with_labels=True, node_color='#89CFF0',node_shape="p", font_weight='bold')
         path_edges = list(zip(path, path[1:]))
         labels = {k: k for k in path}
-        nx.draw_networkx_nodes(G, pos, nodelist=path, node_color='#89CFF0',node_shape="p", **options)
-        nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='#89CFF0',node_shape="p", width=10, **options)
+        nx.draw_networkx_nodes(G, pos, nodelist=path, node_color='#89CFF0',node_shape="o", **options)
+        nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='#89CFF0',node_shape="p",**options)
         nx.draw_networkx_labels(G, pos, labels)
-        #plt.axis('equal')
-        #pretty = "Your rate of infection is: {d}%".format(d =percentage * 100)
-        #plt.text(0.02, 0.02, pretty, fontsize=14, transform=plt.gcf().transFigure)
-        plt.pyplot.savefig('/Users/vitorpedrosa/PycharmProjects/Green-Team-Corona-Tracker/flaskr/static/graph.png')
+        plt.axis('off')
+        plt.savefig('./flaskr/static/graph.png', bbox_inches='tight')
         return(percentage)
 def changeRate(thisRate, thislocation):
     con = get_db()
     cur = con.cursor()
-    qry = "update Location set rate = ? where name = ?"
+    qry = "update Location set rate = ? where name LIKE ?"
     cur.execute(qry, (thisRate,thislocation,))
+    cur.execute(
+        "update UserLocation set rate = (select rate from Location where location_id = UserLocation.location_id) where exists (select rate from Location where location_id = UserLocation.location_id);")
     con.commit()
 
 def changeInfectedUser(thisUser):
@@ -113,6 +113,7 @@ def tux():
 
             db = get_db()
             cur = db.cursor()
+            #get data from form
             this_username = g.user['username']
             location = request.form['location']
             time = request.form['time']
@@ -133,7 +134,7 @@ def tux():
 
             percent = "{:.2f}".format(getReport(this_username))
 
-
+            #print results
             if(float(percent) > 0):
                 return render_template('finalReport/graph.html', message='not Admin', value = percent)
             else:
@@ -157,8 +158,10 @@ def adminPageInfect():
 
     elif request.method == 'POST':
 
+        #get username from form
         infectedUser = request.form['user']
 
+        #execute change
         changeInfectedUser(infectedUser)
 
         return render_template('finalReport/changesSaved.html', message='Admin')
@@ -176,4 +179,25 @@ def adminLocProb():
         if isAdmin:
             locationList = get_db().execute("SELECT * FROM Location order by name")
 
-            return render_template('test_user_index/change_loc_prob.html', locationList=locationList)
+            #generate list of percents
+            percents = []
+            start = 0
+            for x in range(0, 101):
+                percents.append(start)
+                start = start + 1
+
+
+            return render_template('test_user_index/change_loc_prob.html', locationList=locationList, percents=percents)
+
+    elif request.method == 'POST':
+
+        #get data from form
+        changeLocation = request.form['location'] +"%"
+        percent_probability = request.form['prob']
+        infect_probablity = float(percent_probability) * 0.01
+
+        #code to change probablity
+        changeRate(infect_probablity, changeLocation)
+
+        return render_template('finalReport/changesSaved.html', message='Admin', location = changeLocation, percent = percent_probability)
+

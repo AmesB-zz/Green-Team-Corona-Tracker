@@ -12,7 +12,7 @@ import sqlite3
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import  generate_password_hash
 
 
 def get_db():
@@ -44,7 +44,7 @@ def init_db():
 
         db.execute(
             'INSERT INTO Users (username, passwordHash,firstName, lastName, isInfected, isAdmin) VALUES (?, ?, ?, ?, ?, ?)',
-            ('Admin', generate_password_hash('test'), 'Dan', 'Lea', False, True)
+            ('Admin', generate_password_hash('test'), 'Dale', 'Green', False, True)
         )
         db.commit()
 

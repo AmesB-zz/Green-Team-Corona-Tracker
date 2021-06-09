@@ -52,20 +52,5 @@ def addLocation(name, rate):
     cur.execute(qry, (name,rate))
     con.commit()
 
-# def populate():
-#     #con = sql.connect("../instance/flaskr.sqlite")
-#     con = get_db()
-#     cur = con.cursor()
-#     userLocations = open("../DB/populateUserLocation")
-#     locations = open("../DB/populateLocation")
-#     users = open("../DB/populateUsers")
-#     userLocationsSql = userLocations.read()
-#     locationsSql = locations.read()
-#     usersSql = users.read()
-#     cur.executescript(userLocationsSql)
-#     cur.executescript(usersSql)
-#     cur.executescript(locationsSql)
-#     cur.execute("update UserLocation set rate = (select rate from Location where location_id = UserLocation.location_id) where exists (select rate from Location where location_id = UserLocation.location_id);")
-#     cur.execute("update UserLocation set username = (select u.username from Users u where UserLocation.username = u.ROWID);")
-#     con.commit()
-getReport("eringwood0")
+
+#getReport("eringwood0")
