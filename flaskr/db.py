@@ -40,6 +40,7 @@ def init_db():
 
 
         #testing how to initialize
+        #commented out by bryan for testing
 
         db.execute(
             'INSERT INTO Users (username, passwordHash,firstName, lastName, isInfected, isAdmin) VALUES (?, ?, ?, ?, ?, ?)',
