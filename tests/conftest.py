@@ -18,10 +18,7 @@ with open(os.path.join(os.path.dirname(__file__), 'data.sql'), 'rb') as f:
 def app():
     db_fd, db_path = tempfile.mkstemp()
 
-    app = create_app({
-        'TESTING': True,
-        'DATABASE': db_path,
-    })
+    app = create_app()
 
     with app.app_context():
         init_db()

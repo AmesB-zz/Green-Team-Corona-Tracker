@@ -9,9 +9,12 @@ Modified for EOU CS362 Corona Virus project
 
 import sqlite3
 
+from flask import current_app
+
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
+from numpy import int32
 from werkzeug.security import  generate_password_hash
 
 
@@ -38,10 +41,7 @@ def init_db():
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
-
         #testing how to initialize
-        #commented out by bryan for testing
-
         db.execute(
             'INSERT INTO Users (username, passwordHash,firstName, lastName, isInfected, isAdmin) VALUES (?, ?, ?, ?, ?, ?)',
             ('Admin', generate_password_hash('test'), 'Dale', 'Green', False, True)
