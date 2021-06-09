@@ -55,16 +55,15 @@ def getReport(thisUser):
         nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='#89CFF0',node_shape="p",**options)
         nx.draw_networkx_labels(G, pos, labels)
         plt.axis('off')
-        axis = plt.gca()
-        axis.set_xlim([1.8 * x for x in axis.get_xlim()])
-        axis.set_ylim([1.8 * y for y in axis.get_ylim()])
-        plt.savefig('./flaskr/static/graph.png',bbox_inches="tight")
+        plt.savefig('./flaskr/static/graph.png', bbox_inches='tight')
         return(percentage)
 def changeRate(thisRate, thislocation):
     con = get_db()
     cur = con.cursor()
     qry = "update Location set rate = ? where name LIKE ?"
     cur.execute(qry, (thisRate,thislocation,))
+    cur.execute(
+        "update UserLocation set rate = (select rate from Location where location_id = UserLocation.location_id) where exists (select rate from Location where location_id = UserLocation.location_id);")
     con.commit()
 
 def changeInfectedUser(thisUser):
