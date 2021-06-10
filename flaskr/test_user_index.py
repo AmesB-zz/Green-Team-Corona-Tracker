@@ -28,7 +28,7 @@ def getReport(thisUser):
     infectedUser = pd.read_sql_query( "select distinct username from Users where isInfected = 1", con)
     locations = pd.read_sql_query("SELECT name, rate from location", con);
     infectedUserFlatten = infectedUser.values.flatten()
-    print(main)
+    #print(main)
     conn = sql.connect(':memory:')
     plt.clf()
     G = nx.from_pandas_edgelist(main, 'username', 'name', edge_attr='rate')
