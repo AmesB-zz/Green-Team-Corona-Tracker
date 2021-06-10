@@ -24,6 +24,17 @@ def test_login(client, auth):
         assert g.user['username'] == 'test'
 
 @pytest.mark.parametrize(('username', 'password', 'message'), (
+    ('', 'test', b'Username is required.'),
+    ('test', '', b'Password is required.'),
+    ('test', 'test', b'is already registered')
+))
+def test_register_validate_input(client, username, password, message):
+    response = client.post(
+        '/auth/register', data={'firstName':'first', 'lastName':'last', 'username':username, 'password':password}
+    )
+    assert message in response.data
+
+@pytest.mark.parametrize(('username', 'password', 'message'), (
     ('a', 'test', b'Incorrect username.'),
     ('test', 'a', b'Incorrect password.'),
 ))

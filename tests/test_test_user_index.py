@@ -5,29 +5,36 @@ from flaskr.test_user_index import getReport, changeInfectedUser
 
 def test_get_report(app):
 	with app.app_context():
-		db = get_db()
 		assert getReport("eringwood0") == 0
 		changeInfectedUser("adooney21")
 		assert getReport("eringwood0") > 0
 
-def test_user_homepage(client, auth):
+def test_homepage(client, auth):
+	response = client.get('/user_index')
+	assert b'auth/login' in response.data
+
 	auth.login('other', 'test')
 	response = client.get('/user_index')
 	assert b'USER MENU' in response.data
 
-def test_admin_homepage(client, auth):
 	auth.login('test', 'test')
 	response = client.get('/user_index')
 	assert b'Admin Menu' in response.data
+
+
 
 def test_add_contact_event(client, auth, app):
 	username = 'other'
 	password = 'test'
 
 	auth.login(username, password)
-	response = client.post('/user_index', data={'location':'Safeway', 'time':'12:00'})
+	response = client.post('/user_index', data={'location':'Safeway', 'time':'00:00'})
+	assert b"haven't had contact" in response.data
 
 	with app.app_context():
+		changeInfectedUser('adooney21')
+		response = client.post('/user_index', data={'location':'Safeway', 'time':'23:00'})
+		assert b"you had contact with your fellow users" in response.data
 		query = get_db().execute(
 			"SELECT * FROM UserLocation WHERE username = 'other'"
 			).fetchone()
@@ -36,6 +43,9 @@ def test_add_contact_event(client, auth, app):
 def test_admin_infect(client, auth, app):
 	username = 'test'
 	password = 'test'
+
+	response = client.get('/user_index_infect')
+	assert b'auth/login' in response.data
 
 	auth.login(username, password)
 	response = client.get('/user_index_infect')
@@ -52,6 +62,9 @@ def test_admin_infect(client, auth, app):
 def test_admin_change_prob(client, auth, app):
 	username = 'test'
 	password = 'test'
+
+	response = client.get('/user_index_change_prob')
+	assert b'auth/login' in response.data
 
 	auth.login(username, password)
 	response = client.get('/user_index_change_prob')
