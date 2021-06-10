@@ -17,6 +17,7 @@ def test_register(client, app):
 def test_login(client, auth):
     assert client.get('/auth/login').status_code == 200
     response = auth.login()
+    print(response.data)
     assert response.headers['Location'] == 'http://localhost/user_index'
 
     with client:
